@@ -24,7 +24,7 @@ func Scan(startFolder string, callBack func(string, string)) {
 	_, err := os.Open(startFolder)
 	if err != nil {
 		fmt.Println("Location does not exist")
-		os.Exit(-1)
+		return
 	}
 
 	walkerWaitGroup.Add(1)
@@ -48,12 +48,12 @@ func recursiveFolder(dirpath string, fileName string, callBack func(string, stri
 	//release the waitgroup once the method is processed
 	defer walkerWaitGroup.Done()
 	//open a folder
-	folderPtr, err := os.Open(dirpath)
-	if err != nil {
-		//if unable to open the folder log and return
-		fmt.Println("Unable to open folder ", err)
-		return
-	}
+	folderPtr, _ := os.Open(dirpath)
+	// if err != nil {
+	// 	//if unable to open the folder log and return
+	// 	fmt.Println("Unable to open folder ", err)
+	// 	return
+	// }
 
 	//read all files
 	fileInfoArr, _ := folderPtr.Readdir(readAllFiles)
